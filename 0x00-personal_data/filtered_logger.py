@@ -6,10 +6,12 @@ Module for handling Personal Data
 import logging
 import re
 from typing import List
+import mysql.connector
+import os
 
 
-def filter_datum(fields: List[str],
-                 redaction: str, message: str, separator: str) -> str:
+def filter_datum(fields: List[str], redaction: str,
+                 message: str, separator: str) -> str:
     """
     Redacts specified fields in a log message.
 
@@ -75,3 +77,21 @@ def get_logger() -> logging.Logger:
 
     logger.addHandler(handler)
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+    Establishes and returns a connection to the MySQL database.
+
+    Returns:
+        mysql.connector.connection.MySQLConnection: Database connection object.
+    """
+    db_config = {
+        'user': os.getenv('DB_USER'),
+        'password': os.getenv('DB_PASSWORD'),
+        'host': os.getenv('DB_HOST'),
+        'database': os.getenv('DB_NAME')
+    }
+
+    connection = mysql.connector.connect(**db_config)
+    return connection
