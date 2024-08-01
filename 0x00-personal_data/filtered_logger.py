@@ -3,6 +3,7 @@
 Module for handling Personal Data
 """
 
+import bcrypt
 import logging
 import re
 from typing import List
@@ -97,6 +98,22 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     return connection
 
 
+def hash_password(password: str) -> bytes:
+    """
+    Hashes the given password using bcrypt with a salt.
+
+    Args:
+        password (str): The password to be hashed.
+
+    Returns:
+        bytes: The salted and hashed password.
+    """
+    # Generate a salt
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed_password
+
+
 def main():
     """
     Main function to retrieve and display users from the database.
@@ -117,7 +134,3 @@ def main():
     finally:
         cursor.close()
         connection.close()
-
-
-if __name__ == "__main__":
-    main()
