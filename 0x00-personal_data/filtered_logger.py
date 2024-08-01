@@ -95,3 +95,29 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
     connection = mysql.connector.connect(**db_config)
     return connection
+
+
+def main():
+    """
+    Main function to retrieve and display users from the database.
+    """
+    logger = get_logger()
+    connection = get_db()
+
+    try:
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM users")
+        rows = cursor.fetchall()
+
+        for row in rows:
+            message = "; ".join(f"{key}={value}" for key, value in row.items())
+            logger.info(message)
+    except mysql.connector.Error as err:
+        logger.error(f"Error: {err}")
+    finally:
+        cursor.close()
+        connection.close()
+
+
+if __name__ == "__main__":
+    main()
