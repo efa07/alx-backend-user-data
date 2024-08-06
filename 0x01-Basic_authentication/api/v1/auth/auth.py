@@ -6,6 +6,7 @@ from flask import request
 from typing import List, TypeVar
 import fnmatch
 
+
 class Auth:
     """Authentication class.
     """
@@ -15,8 +16,9 @@ class Auth:
 
         Args:
             path (str): The path to check.
-            excluded_paths (List[str]): A list of paths that do not require authentication.
-        
+            excluded_paths (List[str]): A list of paths that do not
+            require authentication.
+
         Returns:
             bool: True if authentication is required, False otherwise.
         """
@@ -38,7 +40,7 @@ class Auth:
 
         Args:
             request: The Flask request object.
-        
+
         Returns:
             str: The Authorization header or None if not present.
         """
@@ -49,10 +51,10 @@ class Auth:
     def current_user(self, request=None) -> TypeVar('User'):
         """
         Method to get the current user from the request.
-        
+
         Args:
             request: The Flask request object.
-        
+
         Returns:
             User: None for now, as logic will be implemented later.
         """
