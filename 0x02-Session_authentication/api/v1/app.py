@@ -21,11 +21,13 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 auth_type = getenv("AUTH_TYPE")
 if auth_type:
     try:
-        auth_module = importlib.import_module(f"api.v1.auth.{auth_type.lower()}")
+        auth_module = importlib.import_module(
+            f"api.v1.auth.{auth_type.lower()}")
         auth_class = getattr(auth_module, auth_type)
         auth = auth_class()
     except (ImportError, AttributeError) as e:
         print(f"Error loading authentication class: {e}")
+
 
 @app.errorhandler(404)
 def not_found(error) -> str:
@@ -60,8 +62,10 @@ def before_request():
         if auth.require_auth(request.path, excluded_paths):
             if auth.authorization_header(request) is None:
                 abort(401)
-            if auth.current_user(request) is None:
+            user = auth.current_user(request)
+            if user is None:
                 abort(403)
+            request.current_user = user
 
 
 if __name__ == "__main__":
