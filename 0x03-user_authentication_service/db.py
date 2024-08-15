@@ -72,3 +72,25 @@ class DB:
             raise
         except InvalidRequestError as e:
             raise InvalidRequestError(f"Invalid request: {e}")
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Update a user's attributes.
+
+        Args:
+            user_id (int): The ID of the user to update.
+            **kwargs: Arbitrary keyword arguments corresponding to the user's
+            attributes to update.
+
+        Raises:
+            ValueError: If any argument does not correspond to a user attribut.
+        """
+        session = self._session
+        user = self.find_user_by(id=user_id)
+
+        for key, value in kwargs.items():
+            if not hasattr(user, key):
+                raise ValueError(f"Attribute '{key}' is not a valid attribute
+                                 of the User class")
+            setattr(user, key, value)
+
+        session.commit()
