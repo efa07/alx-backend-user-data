@@ -2,8 +2,8 @@
 """Basic Flask app"""
 
 
-from flask import Flask, jsonify, request
 from auth import Auth
+from flask import Flask, jsonify, request
 
 AUTH = Auth()
 app = Flask(__name__)
