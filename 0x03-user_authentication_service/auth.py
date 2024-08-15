@@ -2,6 +2,7 @@
 
 import bcrypt
 
+
 class Auth:
     """Auth class to handle password hashing"""
 
