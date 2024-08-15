@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 
+import bcrypt
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
@@ -44,3 +45,14 @@ class Auth:
             return new_user
         except InvalidRequestError as e:
             raise ValueError(f"Invalid request: {e}")
+
+    def valid_login(self, email: str, password: str) -> bool:
+        try:
+            user = self._db.find_user_by(email=email)
+            if user:
+                return bcrypt.checkpw(password.encode('utf-8'),
+                                      user.hashed_password)
+        except Exception:
+            return False
+
+        return False
