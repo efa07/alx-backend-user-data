@@ -60,7 +60,7 @@ class Auth:
             return False
 
         return False
-    
+
 
 def _generate_uuid() -> str:
     """
