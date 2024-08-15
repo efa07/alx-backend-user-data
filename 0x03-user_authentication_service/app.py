@@ -20,6 +20,13 @@ def hello() -> str:
 
 @app.route('/users', methods=['POST'])
 def register_user():
+    """POST /users
+    JSON payload:
+      - email: str = email of the new user
+      - password: str = password of the new user
+    Return:
+        - JSON payload: {"email": "<new user email>", "message": "user created"}
+        """
     email = request.form.get('email')
     password = request.form.get('password')
 
