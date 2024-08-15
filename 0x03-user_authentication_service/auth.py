@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
