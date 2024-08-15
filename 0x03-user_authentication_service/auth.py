@@ -47,6 +47,9 @@ class Auth:
             raise ValueError(f"Invalid request: {e}")
 
     def valid_login(self, email: str, password: str) -> bool:
+        """Check if the provided password matches the hashed password in the
+        database.
+        """
         try:
             user = self._db.find_user_by(email=email)
             if user:
