@@ -60,10 +60,10 @@ class Auth:
             return False
 
         return False
+    
 
-    def _generate_uuid() -> str:
-        """
-    Generate and return a new UUID as a string.
-    This function is private to the auth module.
+def _generate_uuid() -> str:
     """
-        return str(uuid.uuid4())
+    Generate and return a new UUID as a string.
+    """
+    return str(uuid.uuid4())
